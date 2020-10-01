@@ -928,7 +928,7 @@ async def on_message(message):
                 sheet["B" + str(i)].value = sheet["B" + str(i)].value + 5
                 if sheet["B" + str(i)].value >= exp[sheet["C" + str(i)].value - 1]:
                     sheet["C" + str(i)].value = sheet["C" + str(i)].value + 1
-                    await message.channel.send("<@message.author.id\n`레벨이 올랐습니다.`\n`현재 레벨 : `" + str(sheet["C" + str(i)].value) + "\n`경험치 : `" +str(sheet["B" + str(i)].value))
+                    await message.channel.send(@message.author.id + "\n`레벨이 올랐습니다.`\n`현재 레벨 : `" + str(sheet["C" + str(i)].value) + "\n`경험치 : `" +str(sheet["B" + str(i)].value))
                 file.save("레벨.xlsx")
                 break
             if sheet["A" + str(i)].value == None:
