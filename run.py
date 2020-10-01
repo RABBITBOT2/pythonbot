@@ -104,7 +104,7 @@ def deleteTags(htmls):
 
 @client.event
 async def on_ready():
-    await client.change_presence(status=discord.Status.online, activity=discord.Game('!도움'))
+    await client.change_presence(status=discord.Status.online, activity=discord.Game('.도움'))
     print('We have logged in as {0.user}'.format(client))
 
 each_server = {
@@ -165,15 +165,15 @@ async def on_message(message):
     if message.author.bot:
         return None
 
-    if message.content in ['!끝말', '!끝말잇기', '!끝말잇기정보']:
-        if '!끝말' == message.content or '!끝말잇기' == message.content:
+    if message.content in ['.끝말', '.끝말잇기', '.끝말잇기정보']:
+        if '.끝말' == message.content or '.끝말잇기' == message.content:
             embed = discord.Embed(title="끝말잇기 게임", colour = 0xDC00FF)
-            embed.add_field(name="시작", value="`!start` 또는 `!시작`", inline=True)
-            embed.add_field(name="기권", value="`!exit`  또는 `!기권`", inline=True)
-            embed.add_field(name="끝말잇기 정보 보기", value="`!끝말잇기정보`", inline=False)
+            embed.add_field(name="시작", value="`.start` 또는 `.시작`", inline=True)
+            embed.add_field(name="기권", value="`.exit`  또는 `.기권`", inline=True)
+            embed.add_field(name="끝말잇기 정보 보기", value="`.끝말잇기정보`", inline=False)
             embed.timestamp = datetime.datetime.utcnow()
             await channel.send("", embed=embed)
-        if message.content == "!끝말잇기정보":
+        if message.content == ".끝말잇기정보":
             if not (str(message.author.id) in user_card):
                 user_card[str(message.author.id)] = {
                     "user": message.author.name,
@@ -206,11 +206,11 @@ async def on_message(message):
             with open('user_info.json', 'w', encoding='utf-8') as file:
                 file.write(json.dumps(user_card, ensure_ascii=False, indent=4))
 
-            if ('!start' == message.content or '!시작' == message.content) and (not this_server["isPlaying"]):
+            if ('.start' == message.content or '.시작' == message.content) and (not this_server["isPlaying"]):
                 this_server["round"] += 1
 
                 embed = discord.Embed(title='끝말잇기를 시작합니다.',
-                                      description="기권하시려면 `!exit`  또는 `!기권`을 입력해주시기 바랍니다.", colour = 0xDC00FF)
+                                      description="기권하시려면 `.exit`  또는 `.기권`을 입력해주시기 바랍니다.", colour = 0xDC00FF)
                 embed.timestamp = datetime.datetime.utcnow()
                 await channel.send("", embed=embed)
 
@@ -230,7 +230,7 @@ async def on_message(message):
 
             if this_server["isPlaying"] and this_server["who"] == 'USER' and not message.author.bot and not this_server["firstTurn"]:
                 yourWord = message.content
-                if yourWord == '!exit' or yourWord == '!기권':
+                if yourWord == '.exit' or yourWord == '.기권':
                     await channel.send('`[결과] 당신은 기권했습니다. 토끼봇의 승리입니다!`')
                     this_server["resetRound"] = True
                     this_server["isPlaying"] = False
@@ -309,7 +309,7 @@ async def on_message(message):
                 this_server["firstTurn"], this_server["resetRound"] = True, False
                 this_server["who"] = '토끼봇'
 
-    if message.content.startswith("!날씨"):
+    if message.content.startswith(".날씨"):
         learn = message.content.split(" ")
         location = learn[1]
         enc_location = urllib.parse.quote(location+'날씨')
@@ -382,7 +382,7 @@ async def on_message(message):
         embed.timestamp = datetime.datetime.utcnow()
         await message.channel.send(embed=embed)
 
-    if message.content.startswith("!핑"):
+    if message.content.startswith(".핑"):
         latency = round(client.latency * 1000)
         embed = discord.Embed(
                 title='핑(MS)',
@@ -392,7 +392,7 @@ async def on_message(message):
         embed.timestamp = datetime.datetime.utcnow()
         await message.channel.send(embed=embed)
 
-    if message.content.startswith("!인증"):
+    if message.content.startswith(".인증"):
         Image_captcha = ImageCaptcha()
         a = ""  
         for i in range(6):
@@ -412,13 +412,13 @@ async def on_message(message):
         else:
             await message.channel.send("`오답입니다.`")
 
-    if message.content.startswith("!도움"):
+    if message.content.startswith(".도움"):
         embed = discord.Embed(title='도움', colour = 0xDC00FF)
-        embed.add_field(name="명령어:", value="`!인증` - `로봇인지 아닌지 확인합니다.`\n`!정보` - `유저의 정보를 보여줍니다.`\n`!한영번역 (단어 혹은 문장)` - `Korean -> English`\n`!영한번역 (단어 혹은 문장)` - `English -> Korean`\n`!일한번역 (단어 혹은 문장)` - `Japanese -> Korean`\n`!한일번역 (단어 혹은 문장)` - `Korean -> Japanese`\n`!중한번역 (단어 혹은 문장)` - `Chinese -> Korean`\n`!한중번역 (단어 혹은 문장)` - `Korean -> Chinese`\n`!코로나` - `전국 코로나를 보여줍니다.`\n`!롤전적 닉네임` - `롤의 전적을 보여줍니다.`\n`!날씨 지역` - `날씨를 보여줍니다.(대한민국만 가능)`\n`!끝말잇기 or !끝말` - `끝말잇기의 명령어를 알려줍니다.`\n`!start or !시작` - `끝말잇기를 시작합니다.`\n`!exit or !기권` - `끝말잇기를 종료합니다.`\n`!끝말잇기정보` - `끝말잇기의 정보를 보여줍니다.`\n`!핑` - `봇의 핑을 알려줍니다.`")
+        embed.add_field(name="명령어:", value="`.인증` - `로봇인지 아닌지 확인합니다.`\n`.정보` - `유저의 정보를 보여줍니다.`\n`.한영번역 (단어 혹은 문장)` - `Korean -> English`\n`.영한번역 (단어 혹은 문장)` - `English -> Korean`\n`.일한번역 (단어 혹은 문장)` - `Japanese -> Korean`\n`.한일번역 (단어 혹은 문장)` - `Korean -> Japanese`\n`.중한번역 (단어 혹은 문장)` - `Chinese -> Korean`\n`.한중번역 (단어 혹은 문장)` - `Korean -> Chinese`\n`.코로나` - `전국 코로나를 보여줍니다.`\n`.롤전적 닉네임` - `롤의 전적을 보여줍니다.`\n`.날씨 지역` - `날씨를 보여줍니다.(대한민국만 가능)`\n`.끝말잇기 or .끝말` - `끝말잇기의 명령어를 알려줍니다.`\n`.start or .시작` - `끝말잇기를 시작합니다.`\n`.exit or .기권` - `끝말잇기를 종료합니다.`\n`.끝말잇기정보` - `끝말잇기의 정보를 보여줍니다.`\n`.핑` - `봇의 핑을 알려줍니다.`")
         embed.timestamp = datetime.datetime.utcnow()
         await message.channel.send(embed=embed)
 
-    if message.content.startswith("!정보"):
+    if message.content.startswith(".정보"):
         date = datetime.datetime.utcfromtimestamp(((int(message.author.id) >> 22) + 1420070400000) / 1000)
         embed = discord.Embed(title= message.author.name + '님의 정보', colour = 0x00FFD1)
         embed.add_field(name="이름", value=message.author.name, inline=True)
@@ -429,7 +429,7 @@ async def on_message(message):
         embed.timestamp = datetime.datetime.utcnow()
         await message.channel.send(embed=embed)
 
-    if message.content.startswith("!한영번역"):
+    if message.content.startswith(".한영번역"):
         baseurl = "https://openapi.naver.com/v1/papago/n2mt"
         #띄어쓰기 : split처리후 [1:]을 for문으로 붙인다.
         trsText = message.content.split(" ")
@@ -475,7 +475,7 @@ async def on_message(message):
             await message.channel.send("Translate Failed. HTTPError Occured.")
 
 
-    if message.content.startswith("!영한번역"):
+    if message.content.startswith(".영한번역"):
         baseurl = "https://openapi.naver.com/v1/papago/n2mt"
         # 띄어쓰기 : split처리후 [1:]을 for문으로 붙인다.
         trsText = message.content.split(" ")
@@ -520,7 +520,7 @@ async def on_message(message):
         except HTTPError as e:
             await message.channel.send("Translate Failed. HTTPError Occured.")
 
-    if message.content.startswith("!한일번역"):
+    if message.content.startswith(".한일번역"):
         baseurl = "https://openapi.naver.com/v1/papago/n2mt"
         # 띄어쓰기 : split처리후 [1:]을 for문으로 붙인다.
         trsText = message.content.split(" ")
@@ -565,7 +565,7 @@ async def on_message(message):
         except HTTPError as e:
             await message.channel.send("Translate Failed. HTTPError Occured.")
 
-    if message.content.startswith("!일한번역"):
+    if message.content.startswith(".일한번역"):
         baseurl = "https://openapi.naver.com/v1/papago/n2mt"
         # 띄어쓰기 : split처리후 [1:]을 for문으로 붙인다.
         trsText = message.content.split(" ")
@@ -610,7 +610,7 @@ async def on_message(message):
         except HTTPError as e:
             await message.channel.send("Translate Failed. HTTPError Occured.")
 
-    if message.content.startswith("!한중번역"):
+    if message.content.startswith(".한중번역"):
         baseurl = "https://openapi.naver.com/v1/papago/n2mt"
         # 띄어쓰기 : split처리후 [1:]을 for문으로 붙인다.
         trsText = message.content.split(" ")
@@ -657,7 +657,7 @@ async def on_message(message):
         except HTTPError as e:
             await message.channel.send("Translate Failed. HTTPError Occured.")
 
-    if message.content.startswith("!중한번역"):
+    if message.content.startswith(".중한번역"):
         baseurl = "https://openapi.naver.com/v1/papago/n2mt"
         # 띄어쓰기 : split처리후 [1:]을 for문으로 붙인다.
         trsText = message.content.split(" ")
@@ -704,7 +704,7 @@ async def on_message(message):
         except HTTPError as e:
             await message.channel.send("Translate Failed. HTTPError Occured.")
 
-    if message.content.startswith("!코로나"):
+    if message.content.startswith(".코로나"):
         # 보건복지부 코로나 바이러스 정보사이트"
         covidSite = "http://ncov.mohw.go.kr/index.jsp"
         covidNotice = "http://ncov.mohw.go.kr"
@@ -751,12 +751,12 @@ async def on_message(message):
         embed.timestamp = datetime.datetime.utcnow()
         await message.channel.send(embed=embed)
 
-    if message.content.startswith("!롤전적"):
+    if message.content.startswith(".롤전적"):
         try:
             if len(message.content.split(" ")) == 1:
                 embed = discord.Embed(title="소환사 이름이 입력되지 않았습니다!", description="", color=0x5CD1E5)
                 embed.add_field(name="소환사 이름을 입력하지 않았습니다.",
-                                value="!롤전적 닉네임", inline=False)
+                                value=".롤전적 닉네임", inline=False)
                 embed.timestamp = datetime.datetime.utcnow()
                 await message.channel.send(embed=embed)
             else:
@@ -939,6 +939,5 @@ async def on_message(message):
                 break
             i += 1
 
-            
 access_token = os.environ["BOT_TOKEN"]            
 client.run(access_token)
