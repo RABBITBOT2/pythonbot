@@ -921,7 +921,7 @@ async def on_message(message):
     if message.content.startswith("") and message.author.id != 760776430845558794:
         file = openpyxl.load_workbook("레벨.xlsx")
         sheet = file.active
-        exp = [10, 20, 30, 40, 50]
+        exp = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2900, 3000]
         i = 1
         while True:
             if sheet["A" + str(i)].value == str(message.author.id):
