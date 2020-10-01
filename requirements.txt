@@ -2,7 +2,6 @@ discord.py==0.16.12
 datetime==40.8.0
 captcha==7.2.0
 openpyxl==1.4.1
-asyncio=3.4.3
 bs4==4.9.2
 requests==2.24.0
 alliteration==0.0.2
